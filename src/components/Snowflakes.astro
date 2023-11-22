@@ -1,0 +1,125 @@
+---
+import { HTML_TAGS } from "@config";
+
+const getRandom = (min: number, max: number) => {
+  return Math.random() * (max - min) + min;
+};
+
+const snowflakes = HTML_TAGS.map(tag => {
+  const MAX_FALL_DURATION = 30;
+  const MIN_FALL_DURATION = 18;
+  const MAX_SHAKE_DURATION = 6;
+  const MIN_SHAKE_DURATION = 4;
+
+  const left = Math.floor(Math.random() * 100);
+
+  const fallDuration = getRandom(MIN_FALL_DURATION, MAX_FALL_DURATION);
+  const fallDelay = getRandom(0, MAX_FALL_DURATION);
+
+  const shakeDuration = getRandom(MIN_SHAKE_DURATION, MAX_SHAKE_DURATION);
+  const shakeDelay = getRandom(0, MAX_SHAKE_DURATION);
+
+  const fallLength = getRandom(0, 110);
+
+  return {
+    tag,
+    style: {
+      left: `${left}%`,
+      animationDelay: `${fallDelay}s, ${shakeDelay}s`,
+      animationDuration: `${fallDuration}s, ${shakeDuration}s`,
+      fallLength: `${fallLength}%`,
+    },
+  };
+});
+---
+
+<div>
+  {
+    snowflakes.map(flake => (
+      <span class="snowflake" style={flake.style}>
+        {flake.tag}
+      </span>
+    ))
+  }
+</div>
+
+<style>
+  @keyframes snowflakes-fall {
+    0% {
+      top: 0%;
+    }
+    100% {
+      top: 100%;
+    }
+  }
+
+  @keyframes snowflakes-shake1 {
+    0%,
+    100% {
+      transform: translateX(0);
+    }
+    50% {
+      transform: translateX(30px);
+    }
+  }
+
+  @keyframes snowflakes-shake2 {
+    0%,
+    100% {
+      transform: translateX(0);
+    }
+    50% {
+      transform: translateX(50px);
+    }
+  }
+
+  @keyframes snowflakes-shake3 {
+    0%,
+    100% {
+      transform: translateX(0);
+    }
+    50% {
+      transform: translateX(80px);
+    }
+  }
+
+  .snowflake {
+    opacity: 0.4;
+    position: fixed;
+    top: -5%;
+    z-index: 9999;
+    user-select: none;
+    cursor: default;
+    text-shadow: var(--text-color) 1px 0px 10px;
+    color: var(--text-color);
+    animation-timing-function: linear, ease-in-out;
+    animation-iteration-count: infinite, infinite;
+    animation-play-state: running, running;
+  }
+
+  .snowflake:nth-child(3n + 1) {
+    animation-name: snowflakes-fall, snowflakes-shake1;
+  }
+
+  .snowflake:nth-child(3n + 2) {
+    animation-name: snowflakes-fall, snowflakes-shake2;
+  }
+
+  .snowflake:nth-child(3n) {
+    animation-name: snowflakes-fall, snowflakes-shake3;
+  }
+
+  @media (prefers-reduced-motion) {
+    .snowflake:nth-child(3n + 1) {
+      animation-name: none;
+    }
+
+    .snowflake:nth-child(3n + 2) {
+      animation-name: none;
+    }
+
+    .snowflake:nth-child(3n) {
+      animation-name: none;
+    }
+  }
+</style>

@@ -1,0 +1,18 @@
+---
+import { SITE } from "@config";
+import SiteLayout from "@layouts/SiteLayout.astro";
+import Main from "@layouts/Main.astro";
+import type { CollectionEntry } from "astro:content";
+
+export interface Props {
+  pageNum: number;
+  totalPages: number;
+  posts: CollectionEntry<"blog">[];
+}
+---
+
+<SiteLayout title={`Posts | ${SITE.title}`}>
+  <Main pageTitle="Posts" pageDesc="All the articles I've posted.">POSTS</Main>
+</SiteLayout>
+
+<style></style>

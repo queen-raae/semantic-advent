@@ -1,0 +1,18 @@
+---
+import { SITE } from "@config";
+import SiteLayout from "./SiteLayout.astro";
+
+export interface Props {
+  url: string;
+  frontmatter: {
+    title: string;
+    description?: string;
+  };
+}
+
+const { frontmatter } = Astro.props;
+---
+
+<SiteLayout title={frontmatter.title}>
+  <slot />
+</SiteLayout>

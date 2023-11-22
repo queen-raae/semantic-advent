@@ -1,0 +1,36 @@
+---
+import { SOCIALS } from "@config";
+import socialIcons from "@assets/socialIcons";
+
+export interface Props {
+  centered?: boolean;
+}
+---
+
+<menu>
+  {
+    SOCIALS.filter(social => social.active).map(social => (
+      <a
+        href={social.href}
+        title={social.linkTitle}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <Fragment set:html={socialIcons[social.name]} />
+      </a>
+    ))
+  }
+</menu>
+
+<style>
+  menu {
+    margin: 0;
+    padding: 0;
+    display: inline-flex;
+    gap: 0.5em;
+  }
+
+  a {
+    height: 2em;
+  }
+</style>
