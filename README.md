@@ -1,8 +1,6 @@
 # Semantic Advent
 
-[Planning docs](https://docs.google.com/spreadsheets/d/132cOIvRGWjtq9pm6rnGLVIm44o0RJUPPjK9zWrV-SRo/edit?usp=sharing)
-
-## Element post Template
+## Element Post Template
 
 You can copy this and use it as a starting point for your post. It's not set in stone; feel free to change it up if it does not make sense for you or your element.
 
