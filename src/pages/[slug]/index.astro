@@ -1,6 +1,7 @@
 ---
 import SiteLayout from "@layouts/SiteLayout.astro";
 import { type Post, getPosts } from "@utils/data";
+import Socials from "@components/Socials.astro";
 
 export interface Props extends Post {}
 
@@ -11,19 +12,17 @@ export async function getStaticPaths() {
     params: {
       slug: post.slug,
     },
-    props: {
-      ...post,
-    },
+    props: post,
   }));
 }
 
-const { title, bodyHTML, publishOnDate } = Astro.props;
+const { title, slug, bodyHTML, publishOnDate } = Astro.props;
 ---
 
-<SiteLayout>
-  <header>
-    <h1>{title}</h1>
-    <datetime>{publishOnDate}</datetime>
-  </header>
-  <section set:html={bodyHTML} />
+<SiteLayout title={title}>
+  <h1 transition:name={slug}>{title}</h1>
+  <time datetime={publishOnDate}>{publishOnDate}</time>
+  <article set:html={bodyHTML} />
+
+  <footer><Socials /></footer>
 </SiteLayout>
