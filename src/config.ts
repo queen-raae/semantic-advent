@@ -28,7 +28,7 @@ export const SOCIALS: SocialObjects = [
   },
   {
     name: "Github",
-    href: "https://github.com/queen-raae/astro-semantic-advent",
+    href: "https://github.com/queen-raae/semantic-advent",
     linkTitle: ` ${SITE.title} on Github`,
     active: true,
   },
