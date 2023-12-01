@@ -1,6 +1,7 @@
 import rss from "@astrojs/rss";
 import { getPosts } from "@utils/data";
 import { SITE } from "@config";
+import slugify from "@sindresorhus/slugify";
 
 export async function GET() {
   const posts = await getPosts();
@@ -11,7 +12,7 @@ export async function GET() {
     site: SITE.website,
     items: posts.map(({ slug, bodyHTML, title, publishOnDate, authors }) => ({
       link: `/${slug}`,
-      title: title,
+      title: `${SITE.title} - ${slugify(title)}`,
       content: bodyHTML,
       pubDate: publishOnDate ? new Date(publishOnDate) : new Date(),
       author: authors?.map(name => name).join(", "),
