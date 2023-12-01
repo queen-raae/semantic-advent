@@ -1,5 +1,6 @@
 ---
 import SiteLayout from "./SiteLayout.astro";
+import Snowflakes from "@components/Snowflakes.astro";
 
 export interface Props {
   url: string;
@@ -13,5 +14,6 @@ const { frontmatter } = Astro.props;
 ---
 
 <SiteLayout title={frontmatter.title}>
+  <Snowflakes />
   <slot />
 </SiteLayout>

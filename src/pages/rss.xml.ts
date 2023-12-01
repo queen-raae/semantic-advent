@@ -9,11 +9,12 @@ export async function GET() {
     title: SITE.title,
     description: SITE.desc,
     site: SITE.website,
-    items: posts.map(({ slug, bodyHTML, title, publishOnDate }) => ({
+    items: posts.map(({ slug, bodyHTML, title, publishOnDate, authors }) => ({
       link: `/${slug}`,
       title: title,
       content: bodyHTML,
       pubDate: publishOnDate ? new Date(publishOnDate) : new Date(),
+      author: authors?.map(name => name).join(", "),
     })),
   });
 }

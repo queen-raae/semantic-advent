@@ -5,6 +5,7 @@ export interface Post {
   title: string;
   bodyHTML?: string;
   publishOnDate?: string;
+  authors?: string[];
 }
 
 export const getPosts = async (): Promise<Post[]> => {
@@ -15,10 +16,12 @@ export const getPosts = async (): Promise<Post[]> => {
       const title = issue.content?.title;
       const bodyHTML = issue.content?.bodyHTML;
       const publishOnDate = issue.publishOn?.date;
+      const assignees = issue.content?.assignees?.nodes.map(node => node.login);
       return {
         title: title,
         bodyHTML: bodyHTML,
         publishOnDate: publishOnDate,
+        authors: assignees,
         slug: `${publishOnDate || "tbd"}-${slugify(title)}`,
       };
     })
@@ -43,7 +46,11 @@ export const getPosts = async (): Promise<Post[]> => {
 };
 
 interface Issue {
-  content: { title: string; bodyHTML?: string };
+  content: {
+    title: string;
+    bodyHTML?: string;
+    assignees?: { nodes: { login: string }[] };
+  };
   publishOn?: { date: string };
 }
 
@@ -87,6 +94,8 @@ const getGihubIssues = async (): Promise<Issue[]> => {
   });
 
   const { data } = await response.json();
+
+  console.log(JSON.stringify(data, null, 2));
 
   return data.node.items.nodes;
 };

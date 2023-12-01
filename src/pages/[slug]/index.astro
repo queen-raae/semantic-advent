@@ -2,6 +2,7 @@
 import SiteLayout from "@layouts/SiteLayout.astro";
 import { type Post, getPosts } from "@utils/data";
 import Socials from "@components/Socials.astro";
+import { SITE } from "@config";
 
 export interface Props extends Post {}
 
@@ -16,13 +17,25 @@ export async function getStaticPaths() {
   }));
 }
 
-const { title, slug, bodyHTML, publishOnDate } = Astro.props;
+const { title, slug, bodyHTML, publishOnDate, authors } = Astro.props;
+const publishOnDateString = new Date(publishOnDate || "").toLocaleDateString(
+  "en-US",
+  {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  }
+);
 ---
 
 <SiteLayout title={title}>
-  <h1 transition:name={slug}>{title}</h1>
-  <time datetime={publishOnDate}>{publishOnDate}</time>
-  <article set:html={bodyHTML} />
+  <article>
+    <header>
+      <h1 transition:name={slug}>{title}</h1>
+      <p>
+      By {authors?.map(author => <a href=`https://github.com/${author}`>{author}</a>)} for {SITE.title} | <time datetime={publishOnDate}>{publishOnDateString}</time> </p>
+    </header>
+    <section set:html={bodyHTML} />
+  </article>
 
-  <footer><Socials /></footer>
 </SiteLayout>

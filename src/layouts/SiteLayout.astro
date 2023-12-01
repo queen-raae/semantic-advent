@@ -2,7 +2,6 @@
 import { SITE } from "@config";
 import "@styles/base.css";
 import { ViewTransitions } from "astro:transitions";
-import Snowflakes from "@components/Snowflakes.astro";
 import Socials from "@components/Socials.astro";
 import EmailForm from "@components/EmailForm.astro";
 
@@ -82,12 +81,21 @@ const socialImageURL = new URL(
     <ViewTransitions />
   </head>
   <body>
-    <Snowflakes />
     <main>
       <slot />
+      <section>
+        <p>
+          Sign up and receive byte-sized emails about Semantic HTML Elements
+          this advent with real-world use cases!
+        </p>
 
-      <EmailForm />
-      <footer><p>Made with 🤍 by Queen Raae</p><Socials /></footer>
+        <EmailForm />
+      </section>
+      <footer>
+        <p>
+          Made with 🤍 by <a href="https://queen.raae.codes">Queen Raae</a>
+        </p><Socials />
+      </footer>
     </main>
   </body>
 </html>

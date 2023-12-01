@@ -5,7 +5,7 @@ export const SITE: Site = {
   website: "https://advent.raae.codes", // replace this with your deployed domain
   author: "Queen Raae",
   desc: "Byte-sized emails every day this advent covering a Semantic HTML Element, with a real-world use case!",
-  title: "A Semantic Advent",
+  title: "Semantic Advent",
   ogImage: "semantic-og.png",
   emoji: "🎄",
 };

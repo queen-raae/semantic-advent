@@ -19,15 +19,12 @@ const snowflakes = HTML_TAGS.map(tag => {
   const shakeDuration = getRandom(MIN_SHAKE_DURATION, MAX_SHAKE_DURATION);
   const shakeDelay = getRandom(0, MAX_SHAKE_DURATION);
 
-  const fallLength = getRandom(0, 110);
-
   return {
     tag,
     style: {
       left: `${left}%`,
       animationDelay: `${fallDelay}s, ${shakeDelay}s`,
       animationDuration: `${fallDuration}s, ${shakeDuration}s`,
-      fallLength: `${fallLength}%`,
     },
   };
 });
@@ -87,7 +84,6 @@ const snowflakes = HTML_TAGS.map(tag => {
     opacity: 0.4;
     position: fixed;
     top: -5%;
-    z-index: 9999;
     user-select: none;
     cursor: default;
     text-shadow: var(--text-color) 1px 0px 10px;
@@ -99,6 +95,7 @@ const snowflakes = HTML_TAGS.map(tag => {
 
   .snowflake:nth-child(3n + 1) {
     animation-name: snowflakes-fall, snowflakes-shake1;
+    z-index: 9999;
   }
 
   .snowflake:nth-child(3n + 2) {
