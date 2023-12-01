@@ -18,7 +18,7 @@ Add a demo of the element in action. Preferably a CodePen! Some element don't lo
 
 https://codepen.io/adamlindqvist/pen/EaPeJg
 
-If there are any accissibility concerns, or gains, mention them here.
+If there are any accessibility concerns, or gains, mention them here.
 
 Some ending remarks, maybe some links to other resources. There are often great older resources on this that could be nice ro resurface.
 
