@@ -95,7 +95,5 @@ const getGihubIssues = async (): Promise<Issue[]> => {
 
   const { data } = await response.json();
 
-  console.log(JSON.stringify(data, null, 2));
-
   return data.node.items.nodes;
 };
