@@ -10,8 +10,23 @@ export interface Post {
 
 export const getPosts = async (): Promise<Post[]> => {
   const issues = await getGihubIssues();
-
-  return issues
+  const ignoreIssueFilter = import.meta.env.OVERRIDE_ISSUE_FILTER === "true";
+  const posts = issues
+    .filter(issue => {
+      if (ignoreIssueFilter) {
+        return true;
+      } else {
+        return (
+          // Only include posts that have a publish date
+          issue.publishOn?.date &&
+          // and that date is in the past
+          new Date(issue.publishOn?.date + " 18:30:00 GMT+01:00") <=
+            new Date() &&
+          // and is marked as done
+          issue.status?.name === "Done"
+        );
+      }
+    })
     .map(issue => {
       const title = issue.content?.title;
       const bodyHTML = issue.content?.bodyHTML;
@@ -31,18 +46,11 @@ export const getPosts = async (): Promise<Post[]> => {
       } else {
         return 1;
       }
-    })
-    .filter(post => {
-      if (import.meta.env.NODE_ENV === "production") {
-        return (
-          // In production, only include posts that have a publish date in the past
-          post.publishOnDate && new Date(post.publishOnDate) <= new Date()
-        );
-      } else {
-        // In development etc., include all posts
-        return true;
-      }
     });
+
+  console.log(posts.length);
+
+  return posts;
 };
 
 interface Issue {
@@ -52,6 +60,7 @@ interface Issue {
     assignees?: { nodes: { login: string }[] };
   };
   publishOn?: { date: string };
+  status?: { name: "Assigned" | "In Progress" | "Done" };
 }
 
 const getGihubIssues = async (): Promise<Issue[]> => {
@@ -71,6 +80,11 @@ const getGihubIssues = async (): Promise<Issue[]> => {
                   publishOn: fieldValueByName(name: "Publish Date")  {
                     ... on ProjectV2ItemFieldDateValue {
                         date
+                      }
+                  }
+                  status: fieldValueByName(name: "Status")  {
+                    ... on ProjectV2ItemFieldSingleSelectValue {
+                        name
                       }
                   }
                   content {
