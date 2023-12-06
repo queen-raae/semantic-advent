@@ -15,9 +15,7 @@ export async function GET() {
       title: `${SITE.title} - ${slugify(title)}`,
       content: bodyHTML,
       pubDate: publishOnDate ? new Date(publishOnDate) : new Date(),
-      author: authors
-        ?.map(author => `<a href="https://github.com/${author}">@${author}</a>`)
-        .join(", "),
+      author: authors?.join(", "),
     })),
   });
 }
